@@ -39,7 +39,7 @@ public class BallCollider : MonoBehaviour
                 float newLocal = collision.contacts[0].point.x;
                 if(newLocal < -3.2f) newLocal = -3.2f;
                 if(newLocal > 3.2f) newLocal = 3.2f;
-                StartCoroutine(ModeSideways(shooter.GetComponent<Transform>(), newLocal));
+                shooter.StartMoveSideways(newLocal);
             }
 
             // So ATUALIZA A POSICAO NO FINAL DO TURNO
@@ -52,7 +52,7 @@ public class BallCollider : MonoBehaviour
             //     gameManager.nextLevel();
             // }
 
-            if(shooter.ballHolder.GetComponent<Transform>().childCount == 1)
+            if(shooter.ballHolder.GetComponent<Transform>().childCount <= 1) // sometimes it doesnt end turn
             {
                 returnedBalls = 0;
                 shooter.changeShooting();
@@ -60,20 +60,5 @@ public class BallCollider : MonoBehaviour
             }
         }
         else currentRigidbody.velocity = Vector2.Reflect(currentRigidbody.velocity, collision.GetContact(0).normal);
-    }
-
-    private IEnumerator ModeSideways(Transform block, float where)
-    {
-        float timer = 0;
-        Vector2 startPosition = block.position;
-        Vector2 endPosition = new Vector2(where, -5f);
-
-        while(timer < .5f)
-        {
-            timer += Time.deltaTime;
-            print(timer);
-            block.position = Vector2.Lerp(startPosition, endPosition, timer / .5f);
-            yield return null;
-        }
     }
 }

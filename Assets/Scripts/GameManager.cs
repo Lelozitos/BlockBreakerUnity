@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Canvas canvas;
 
+    [SerializeField] private TMP_Text levelText;
+    [SerializeField] private TMP_Text best;
+
+    public GameObject deathMenu;
+
     private int level = 0;
 
     private Transform currentBlock;
@@ -18,6 +24,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>().LoadValues();
         nextLevel();
     }
 
@@ -30,7 +37,7 @@ public class GameManager : MonoBehaviour
     public void nextLevel()
     {
         level++;
-        canvas.GetComponentInChildren<TMP_Text>().text = "" + level;
+        levelText.text = "" + level;
 
         var random = new System.Random();
         // harder levels spawn more blocks
@@ -57,6 +64,11 @@ public class GameManager : MonoBehaviour
 
         foreach (Transform block in blockHolder)
         {
+            if(block.position.y <= -4.5f)
+            {
+                deathMenu.SetActive(true);
+                Time.timeScale = 0f;
+            }
             StartCoroutine(MoveDown(block));
         }
     }

@@ -34,10 +34,5 @@ public class BlockCollider : MonoBehaviour
             }
             else currentText.text = "" + hp;
         }
-
-        if(name == "Bottom" )
-        {
-            // end game
-        }
     }
 }

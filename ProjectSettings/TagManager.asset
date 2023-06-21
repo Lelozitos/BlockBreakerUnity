@@ -4,14 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Level
-  - Best
-  - Text
+  - Settings
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enable Raycast
   - Water
   - UI
   - 
